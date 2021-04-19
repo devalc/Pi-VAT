@@ -57,7 +57,7 @@ thematic_shiny(font = "auto")
 
 ui <- navbarPage(
     
-    title = div("Viz-WEPPcloud",
+    title = div("In-WMPT",
                 div(
                     tags$a(
                         href = "https://forest.moscowfsl.wsu.edu/fswepp/",
@@ -84,7 +84,7 @@ ui <- navbarPage(
                         )
                     ),
                     tags$a(
-                        href = "https://github.com/devalc/Viz-WEPPCloud",
+                        href = "https://github.com/devalc/ShinyWMPT",
                         tags$img(
                             src = "GitHub-Mark.png",
                             style = "position:fixed;right: 10px;top: 5px;padding-bottom:10px;",
@@ -93,7 +93,7 @@ ui <- navbarPage(
                     )
                 )),
     
-    windowTitle = "Viz-WEPPcloud",
+    windowTitle = "In-WMPT",
     position = "fixed-top",
     # fluid = TRUE,
     collapsible = TRUE,
@@ -657,6 +657,7 @@ ui <- navbarPage(
                     uiOutput("SWAT_variable"),
                     uiOutput("SWAT_reachno"),
                     uiOutput("SWAT_subnum"),
+                    uiOutput("swat_hru_subno"),
                     uiOutput("swat_hru_lulc"),
                     uiOutput("hru_slp_slider")
                     
@@ -3398,6 +3399,56 @@ server <- function(input, output, session) {
     })
     
     
+    output$swat_hru_subno <- renderUI({
+        req(SWAT_data())
+        if (input$DefOrUserUpload_SWAT == 'Upload data') {
+            req(input$which_file)
+            if(input$which_file == 'Subbasin'){
+            }else
+                if(input$which_file == 'Reach'){
+                    
+                }else
+                    if(input$which_file == 'HRU'){
+                        pickerInput(
+                            "SWAT_hru_sub",
+                            "Select the Subbasin of interest",
+                            choices = unique(as.character(SWAT_data()$SUBBASIN)),
+                            options = list(`actions-box` = TRUE,
+                                           `header` = "Select Reach",
+                                           `windowPadding` = 1,
+                                           `width` = " css-width ",
+                                           `size` = 6),
+                            selected = unique(SWAT_data()$SUBBASIN)[1],
+                            multiple = TRUE
+                        )
+                    }
+        } else
+            if (input$DefOrUserUpload_SWAT == 'Default_Data_WE38') {
+                req(input$which_file)
+                if(input$which_file == 'Subbasin'){
+                    
+                }else
+                    if(input$which_file == 'Reach'){
+                        
+                    }else
+                        if(input$which_file == 'HRU'){
+                            pickerInput(
+                                "SWAT_hru_sub",
+                                "Select the Subbasin of interest",
+                                choices = unique(as.character(SWAT_data()$SUBBASIN)),
+                                options = list(`actions-box` = TRUE,
+                                               `header` = "Select Reach",
+                                               `windowPadding` = 1,
+                                               `width` = " css-width ",
+                                               `size` = 6),
+                                selected = unique(SWAT_data()$SUBBASIN)[1],
+                                multiple = TRUE
+                            ) 
+                        }
+            }
+    })
+    
+    
     
     output$SWAT_subnum <- renderUI({
         if (input$DefOrUserUpload_SWAT == 'Upload data') {
@@ -3496,19 +3547,19 @@ server <- function(input, output, session) {
                             `size` = 8
                         ),
                         choices =   c("FLOW_OUTcms","EVAPcms","TLOSScms","SED_OUTtons",
-                                                                                        "SEDCONCmg/L","ORGN_OUTkg","NO3_OUTkg","NH4_OUTkg","NO2_OUTkg",
-                                                                                         "CHLA_OUTkg", "CBOD_OUTkg","DISOX_OUTkg","SOLPST_OUTmg","SORPST_OUTmg",
+                                      "SEDCONCmg/L","ORGN_OUTkg","ORGP_OUTkg","NO3_OUTkg","NH4_OUTkg","NO2_OUTkg",
+                                      "MINP_OUTkg","CHLA_OUTkg", "CBOD_OUTkg","DISOX_OUTkg","SOLPST_OUTmg","SORPST_OUTmg",
                                                                                          "REACTPSTmg","VOLPSTmg","SETTLPSTmg","SETTLPSTmg",
                                                                                          "DIFFUSEPSTmg","REACBEDPSTmg","BURYPSTmg","BED_PSTmg",
                                                                                          "BACTP_OUTct","BACTLP_OUTct","CMETAL#1kg","CMETAL#2kg","CMETAL#3kg"),
                         selected = colnames(SWAT_data()[c(4:8)]),
                         multiple = T,
                         choicesOpt = list(content = stringr::str_trunc(c("FLOW_OUTcms","EVAPcms","TLOSScms","SED_OUTtons",
-                                                                                   "SEDCONCmg/L","ORGN_OUTkg","NO3_OUTkg","NH4_OUTkg","NO2_OUTkg",
-                                                                                   "CHLA_OUTkg", "CBOD_OUTkg","DISOX_OUTkg","SOLPST_OUTmg","SORPST_OUTmg",
-                                                                                   "REACTPSTmg","VOLPSTmg","SETTLPSTmg","SETTLPSTmg",
-                                                                                   "DIFFUSEPSTmg","REACBEDPSTmg","BURYPSTmg","BED_PSTmg",
-                                                                                   "BACTP_OUTct","BACTLP_OUTct","CMETAL#1kg","CMETAL#2kg","CMETAL#3kg"), width = 35
+                                                                         "SEDCONCmg/L","ORGN_OUTkg","ORGP_OUTkg","NO3_OUTkg","NH4_OUTkg","NO2_OUTkg",
+                                                                         "MINP_OUTkg","CHLA_OUTkg", "CBOD_OUTkg","DISOX_OUTkg","SOLPST_OUTmg","SORPST_OUTmg",
+                                                                         "REACTPSTmg","VOLPSTmg","SETTLPSTmg","SETTLPSTmg",
+                                                                         "DIFFUSEPSTmg","REACBEDPSTmg","BURYPSTmg","BED_PSTmg",
+                                                                         "BACTP_OUTct","BACTLP_OUTct","CMETAL#1kg","CMETAL#2kg","CMETAL#3kg"), width = 35
                         ))
 
                     )
@@ -3605,16 +3656,16 @@ server <- function(input, output, session) {
                                 `size` = 8
                             ),
                             choices =   c("FLOW_OUTcms","EVAPcms","TLOSScms","SED_OUTtons",
-                                          "SEDCONCmg/L","ORGN_OUTkg","NO3_OUTkg","NH4_OUTkg","NO2_OUTkg",
-                                          "CHLA_OUTkg", "CBOD_OUTkg","DISOX_OUTkg","SOLPST_OUTmg","SORPST_OUTmg",
+                                          "SEDCONCmg/L","ORGN_OUTkg","ORGP_OUTkg","NO3_OUTkg","NH4_OUTkg","NO2_OUTkg",
+                                          "MINP_OUTkg","CHLA_OUTkg", "CBOD_OUTkg","DISOX_OUTkg","SOLPST_OUTmg","SORPST_OUTmg",
                                           "REACTPSTmg","VOLPSTmg","SETTLPSTmg","SETTLPSTmg",
                                           "DIFFUSEPSTmg","REACBEDPSTmg","BURYPSTmg","BED_PSTmg",
                                           "BACTP_OUTct","BACTLP_OUTct","CMETAL#1kg","CMETAL#2kg","CMETAL#3kg"),
                             selected = colnames(SWAT_data()[c(4:8)]),
                             multiple = T,
                             choicesOpt = list(content = stringr::str_trunc(c("FLOW_OUTcms","EVAPcms","TLOSScms","SED_OUTtons",
-                                                                             "SEDCONCmg/L","ORGN_OUTkg","NO3_OUTkg","NH4_OUTkg","NO2_OUTkg",
-                                                                             "CHLA_OUTkg", "CBOD_OUTkg","DISOX_OUTkg","SOLPST_OUTmg","SORPST_OUTmg",
+                                                                             "SEDCONCmg/L","ORGN_OUTkg","ORGP_OUTkg","NO3_OUTkg","NH4_OUTkg","NO2_OUTkg",
+                                                                             "MINP_OUTkg","CHLA_OUTkg", "CBOD_OUTkg","DISOX_OUTkg","SOLPST_OUTmg","SORPST_OUTmg",
                                                                              "REACTPSTmg","VOLPSTmg","SETTLPSTmg","SETTLPSTmg",
                                                                              "DIFFUSEPSTmg","REACBEDPSTmg","BURYPSTmg","BED_PSTmg",
                                                                              "BACTP_OUTct","BACTLP_OUTct","CMETAL#1kg","CMETAL#2kg","CMETAL#3kg"), width = 35
@@ -3912,7 +3963,8 @@ server <- function(input, output, session) {
             dplyr::filter(Watershed %in% input$SWAT_wshed &
                               Scenario %in% input$SWAT_scen_hru_base)%>% 
             arrange_at(.vars = input$swat_var_hru, desc) %>% ungroup() %>%
-            dplyr::mutate_if(is.numeric, round, 2) %>% 
+            dplyr::mutate_if(is.numeric, round, 2) %>%
+            dplyr::filter(SUBBASIN %in% input$SWAT_hru_sub)%>%
             dplyr::filter(LULC %in% input$SWAT_hru_lulc)%>%
             dplyr::filter(MEAN_SLOPE >= min(input$swat_thresh_slp) & MEAN_SLOPE <= max(input$swat_thresh_slp) )
         
@@ -4015,7 +4067,8 @@ server <- function(input, output, session) {
         req(SWATHru_data_rel())
         SWATHru_data_rel() %>%
             dplyr::filter(Watershed %in% input$SWAT_wshed &
-                              Scenario %in% input$SWAT_scen_hru_comp)%>% 
+                              Scenario %in% input$SWAT_scen_hru_comp)%>%
+            dplyr::filter(SUBBASIN %in% input$SWAT_hru_sub)%>%
             dplyr::filter(LULC %in% input$SWAT_hru_lulc)%>%
             dplyr::filter(MEAN_SLOPE >= min(input$swat_thresh_slp) & MEAN_SLOPE <= max(input$swat_thresh_slp) )%>%
             arrange_at(.vars = input$swat_var_hru, desc)
@@ -4027,7 +4080,7 @@ server <- function(input, output, session) {
         
         SWATHru_data_comp() %>% as.data.frame() %>%
             dplyr::select(-geometry) %>%
-            dplyr::select(GIS, LULC, SUBBASIN, LU_CODE, MEAN_SLOPE, AREA,
+            dplyr::select(GIS, LULC, SUBBASIN, LU_CODE, SOIL_CODE, MEAN_SLOPE, AREA,
                           input$swat_var_hru,
                           paste0("AbsChange_",input$swat_var_hru))
     })
@@ -4269,10 +4322,11 @@ server <- function(input, output, session) {
                         theme(
                             axis.text.x = element_text(
                                 angle = 45,
+                                size= 13,
                                 vjust = ,
                                 colour = "Black"
                             ),
-                            axis.text.y = element_text(colour = "Black"),
+                            axis.text.y = element_text(colour = "Black", size =12),
                             axis.title.x = element_blank(),
                             axis.title.y = element_blank(),
                             legend.title = element_blank(),
@@ -4305,7 +4359,8 @@ server <- function(input, output, session) {
                             ),
                             legend = list(
                                 orientation = "v",
-                                title=list(text='<b> Scenario </b>')
+                                title=list(text='<b> Scenario </b>'),
+                                font = list(size = 12)
                             )
                         )
 
@@ -4341,17 +4396,22 @@ server <- function(input, output, session) {
                             theme(
                                 axis.text.x = element_text(
                                     angle = 45,
+                                    size=13,
                                     vjust = ,
                                     colour = "Black"
                                 ),
-                                axis.text.y = element_text(colour = "Black"),
+                                axis.text.y = element_text(colour = "Black", size =12),
                                 axis.title.x = element_blank(),
                                 axis.title.y = element_blank(),
                                 legend.title = element_blank(),
                                 legend.position = "right"
                             ) + labs(y = "Percent of total across all Watersheds", x = "") +
                             coord_flip() +
-                            scale_fill_brewer(palette = "RdYlGn", direction = 1) 
+                            scale_fill_brewer(palette = "RdYlGn", direction = 1) +
+                            scale_y_continuous(
+                                labels = function(x)
+                                    paste0(x * 1, "%")
+                            )
                         ggplotly(b)  %>%
                             layout(
                                 title = list(
@@ -4372,7 +4432,8 @@ server <- function(input, output, session) {
                                 ),
                                 legend = list(
                                     orientation = "v",
-                                    title=list(text='<b> Reach </b>')
+                                    title=list(text='<b> Reach </b>'),
+                                    font = list(size = 12)
                                 )
                             )
 
@@ -4826,8 +4887,11 @@ server <- function(input, output, session) {
                     ) %>%
                     layout(
                         xaxis = list(
-                            tickfont = list(size = 12),
+                            tickfont = list(size = 16),
                             tickangle = 45
+                        ),
+                        yaxis = list(
+                            tickfont = list(size = 16)
                         ),
                         margin = list(
                             l = 150,
@@ -4880,10 +4944,11 @@ server <- function(input, output, session) {
                         theme(
                             axis.text.x = element_text(
                                 angle = 45,
+                                size = 13,
                                 vjust = ,
                                 colour = "Black"
                             ),
-                            axis.text.y = element_text(colour = "Black"),
+                            axis.text.y = element_text(colour = "Black", size =12),
                             axis.title.x = element_blank(),
                             axis.title.y = element_blank(),
                             legend.title = element_blank(),
@@ -4916,7 +4981,8 @@ server <- function(input, output, session) {
                             ),
                             legend = list(
                                 orientation = "v",
-                                title=list(text='<b> Scenario </b>')
+                                title=list(text='<b> Scenario </b>'),
+                                font = list(size = 12)
                             )
                         )
                     
@@ -4939,8 +5005,11 @@ server <- function(input, output, session) {
                         ) %>%
                         layout(
                             xaxis = list(
-                                tickfont = list(size = 12),
+                                tickfont = list(size = 16),
                                 tickangle = 45
+                            ),
+                            yaxis = list(
+                                tickfont = list(size = 16)
                             ),
                             margin = list(
                                 l = 150,
@@ -4994,17 +5063,22 @@ server <- function(input, output, session) {
                             theme(
                                 axis.text.x = element_text(
                                     angle = 45,
+                                    size =13,
                                     vjust = ,
                                     colour = "Black"
                                 ),
-                                axis.text.y = element_text(colour = "Black"),
+                                axis.text.y = element_text(colour = "Black", size =12),
                                 axis.title.x = element_blank(),
                                 axis.title.y = element_blank(),
                                 legend.title = element_blank(),
                                 legend.position = "right"
                             ) + labs(y = "Percent of total across all Watersheds", x = "") +
                             coord_flip() +
-                            scale_fill_brewer(palette = "RdYlGn") 
+                            scale_fill_brewer(palette = "RdYlGn") +
+                            scale_y_continuous(
+                                labels = function(x)
+                                    paste0(x * 1, "%")
+                            )
                         
                         ggplotly(b)  %>%
                             layout(
@@ -5026,7 +5100,8 @@ server <- function(input, output, session) {
                                 ),
                                 legend = list(
                                     orientation = "v",
-                                    title=list(text='<b> Watershed </b>')
+                                    title=list(text='<b> Watershed </b>'),
+                                    font = list(size = 12)
                                 )
                             )
                         
@@ -5923,9 +5998,9 @@ server <- function(input, output, session) {
         
         tmsub<-tm_shape(SWATSub_data_comp(), name = "Difference between comparison & baseline scenario") +
             tmap::tm_polygons(
-                # paste0("AbsChange_",input$swat_var_sub),
+                paste0("AbsChange_",input$swat_var_sub),
                 id = "watershed",
-                palette = "plasma",
+                palette = "viridis",
                 legend.hist = TRUE,
                 style = "pretty",
                 # style = "fixed",
@@ -5938,7 +6013,7 @@ server <- function(input, output, session) {
             tmap::tm_polygons(
                         input$swat_var_sub,
                         id = "watershed",
-                        palette = "plasma",
+                        palette = "viridis",
                         legend.hist = TRUE,
                         style = "pretty",
                         # style = "fixed",
@@ -5952,7 +6027,7 @@ server <- function(input, output, session) {
                     tmap::tm_polygons(
                         input$swat_var_sub,
                         id = "watershed",
-                        palette = "plasma",
+                        palette = "viridis",
                         legend.hist = TRUE,
                         style = "pretty",
                         # style = "fixed",
@@ -5980,7 +6055,7 @@ server <- function(input, output, session) {
             tmap::tm_polygons(
                 paste0("AbsChange_",input$swat_var_hru),
                 id = "watershed",
-                palette = "plasma",
+                palette = "viridis",
                 legend.hist = TRUE,
                 style = "pretty",
                 title = "Comparison minus Baseline"
@@ -5989,7 +6064,7 @@ server <- function(input, output, session) {
             tmap::tm_polygons(
                 input$swat_var_hru,
                 id = "watershed",
-                palette = "plasma",
+                palette = "viridis",
                 legend.hist = TRUE,
                 style = "pretty",
                 title = "Baseline Scenario "
@@ -5998,7 +6073,7 @@ server <- function(input, output, session) {
             tmap::tm_polygons(
                 input$swat_var_hru,
                 id = "watershed",
-                palette = "plasma",
+                palette = "viridis",
                 legend.hist = TRUE,
                 style = "pretty",
                 title = "Comparison Scenario"
