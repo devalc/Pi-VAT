@@ -2,12 +2,11 @@
 ##
 ## Script name: app.R
 ##
-## Purpose of the script: Script to ingest and visualize WEPPcloud simulations so as to 
-##  support targeted management
+## Purpose of the script: 
 ##
 ## @author: Chinmay Deval
 ##
-## Created on Fri Jan 17 19:35:48 2020
+## Created on Fri Sept 04 19:35:48 2020
 ##
 ## Copyright (c) Chinmay Deval, 2020
 ## Email: chinmay.deval91@gmail.com
@@ -57,7 +56,7 @@ thematic_shiny(font = "auto")
 
 ui <- navbarPage(
     
-    title = div("In-WMPT",
+    title = div("In-WPaT",
                 div(
                     tags$a(
                         href = "https://forest.moscowfsl.wsu.edu/fswepp/",
@@ -4541,7 +4540,7 @@ server <- function(input, output, session) {
                     sum(Particle_Class_5_Fraction_kg) * 100,
                 cumParticle.Fraction.Under.0.016.mm = cumsum(Particle_Fraction_Under_0.016_mm_kg) /
                     sum(Particle_Fraction_Under_0.016_mm_kg) * 100,
-                cumSediment.Yield.of.Particles.Under.0.016.mm..kg.ha. = cumsum(Sediment_Yield_of_Particles_Under_0.016_mm_kg) /
+                cumSediment.Yield.of.Particles.Under.0.016.mm..kg = cumsum(Sediment_Yield_of_Particles_Under_0.016_mm_kg) /
                     sum(Sediment_Yield_of_Particles_Under_0.016_mm_kg) * 100
             ) %>% dplyr::filter(Scenario %in% c(input$Hill_scen_base,  input$Hill_scen_comp)) %>% dplyr::filter(cumPercArea < input$thresh_H) %>%
             ungroup()
@@ -4587,7 +4586,7 @@ server <- function(input, output, session) {
                     sum(Particle_Class_5_Fraction_kg) * 100,
                 cumParticle.Fraction.Under.0.016.mm = cumsum(Particle_Fraction_Under_0.016_mm_kg) /
                     sum(Particle_Fraction_Under_0.016_mm_kg) * 100,
-                cumSediment.Yield.of.Particles.Under.0.016.mm..kg.ha. = cumsum(Sediment_Yield_of_Particles_Under_0.016_mm_kg) /
+                cumSediment.Yield.of.Particles.Under.0.016.mm..kg = cumsum(Sediment_Yield_of_Particles_Under_0.016_mm_kg) /
                     sum(Sediment_Yield_of_Particles_Under_0.016_mm_kg) * 100
             ) %>% dplyr::filter(Scenario %in% c(input$Hill_scen_base,  input$Hill_scen_comp)) %>% dplyr::filter(cumPercLen < input$thresh_H) %>%
             ungroup()
@@ -4618,7 +4617,7 @@ server <- function(input, output, session) {
                 cumParticle.Class.4.Fraction = cumsum(Particle_Class_4_Fraction_kg),
                 cumParticle.Class.5.Fraction = cumsum(Particle_Class_5_Fraction_kg),
                 cumParticle.Fraction.Under.0.016.mm = cumsum(Particle_Fraction_Under_0.016_mm_kg),
-                cumSediment.Yield.of.Particles.Under.0.016.mm..kg.ha. = cumsum(Sediment_Yield_of_Particles_Under_0.016_mm_kg)
+                cumSediment.Yield.of.Particles.Under.0.016.mm..kg = cumsum(Sediment_Yield_of_Particles_Under_0.016_mm_kg)
             ) %>% dplyr::filter(Scenario %in% c(input$Hill_scen_base,  input$Hill_scen_comp)) %>% dplyr::filter(cumPercArea < input$thresh_H) %>%
             ungroup()
     })
@@ -4646,7 +4645,7 @@ server <- function(input, output, session) {
                 cumParticle.Class.4.Fraction = cumsum(Particle_Class_4_Fraction_kg),
                 cumParticle.Class.5.Fraction = cumsum(Particle_Class_5_Fraction_kg),
                 cumParticle.Fraction.Under.0.016.mm = cumsum(Particle_Fraction_Under_0.016_mm_kg),
-                cumSediment.Yield.of.Particles.Under.0.016.mm..kg.ha. = cumsum(Sediment_Yield_of_Particles_Under_0.016_mm_kg)
+                cumSediment.Yield.of.Particles.Under.0.016.mm..kg = cumsum(Sediment_Yield_of_Particles_Under_0.016_mm_kg)
             ) %>% dplyr::filter(Scenario %in% c(input$Hill_scen_base,  input$Hill_scen_comp)) %>% dplyr::filter(cumPercLen < input$thresh_H) %>%
             ungroup()
     })
@@ -5193,7 +5192,7 @@ server <- function(input, output, session) {
                                                                     if (input$Hill_variable == "Sediment_Yield_of_Particles_Under_0.016_mm_kg") {
                                                                         p1 <-
                                                                             p1 + geom_line(
-                                                                                aes(y = cumSediment.Yield.of.Particles.Under.0.016.mm..kg.ha. , color = Scenario),
+                                                                                aes(y = cumSediment.Yield.of.Particles.Under.0.016.mm..kg , color = Scenario),
                                                                                 size = 0.5
                                                                             )
                                                                     }
@@ -5377,7 +5376,7 @@ server <- function(input, output, session) {
                                                                     if (input$Hill_variable == "Sediment_Yield_of_Particles_Under_0.016_mm_kg") {
                                                                         p3 <-
                                                                             p3 + geom_line(
-                                                                                aes(y = cumSediment.Yield.of.Particles.Under.0.016.mm..kg.ha. , color = Scenario),
+                                                                                aes(y = cumSediment.Yield.of.Particles.Under.0.016.mm..kg , color = Scenario),
                                                                                 size = 0.5
                                                                             )
                                                                     }
@@ -5564,7 +5563,7 @@ server <- function(input, output, session) {
                                                                     if (input$Hill_variable == "Sediment_Yield_of_Particles_Under_0.016_mm_kg") {
                                                                         p2 <-
                                                                             p2 + geom_line(
-                                                                                aes(y = cumSediment.Yield.of.Particles.Under.0.016.mm..kg.ha. , color = Scenario),
+                                                                                aes(y = cumSediment.Yield.of.Particles.Under.0.016.mm..kg , color = Scenario),
                                                                                 size = 0.5
                                                                             )
                                                                     }
@@ -5742,7 +5741,7 @@ server <- function(input, output, session) {
                                                                     if (input$Hill_variable == "Sediment_Yield_of_Particles_Under_0.016_mm_kg") {
                                                                         p4 <-
                                                                             p4 + geom_line(
-                                                                                aes(y = cumSediment.Yield.of.Particles.Under.0.016.mm..kg.ha. , color = Scenario),
+                                                                                aes(y = cumSediment.Yield.of.Particles.Under.0.016.mm..kg , color = Scenario),
                                                                                 size = 0.5
                                                                             )
                                                                     }
