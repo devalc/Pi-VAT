@@ -302,7 +302,7 @@ ui <- navbarPage(
                         inputId = "AreaVsScen",
                         label = "Management/watershed Options: ",
                         choices = c(
-                            "One Watershed, All Scenarios" = "allscen",
+                            "One Watershed, Selected Scenarios" = "allscen",
                             "One Scenario, Selected Watersheds" =
                                 "allwat"
                         ),
@@ -988,7 +988,20 @@ server <- function(input, output, session) {
         if (input$DefOrUserUpload_W == 'Upload data') {
             req(Wshed_data())
             if (input$AreaVsScen == 'allscen') {
-                
+                pickerInput(
+                    "Wshed_wshed_S",
+                    "Select the scenarios of interest",
+                    unique(Wshed_data()$Scenario),
+                    selected =   unique(Wshed_data()$Scenario)[1:10],
+                    multiple = TRUE,
+                    options = list(
+                        `actions-box` = TRUE,
+                        `header` = "Select scenarios ",
+                        `windowPadding` = 1,
+                        `width` = " css-width ",
+                        `size` = 6
+                    )
+                )
             } else
                 if (input$AreaVsScen == 'allwat') {
                     pickerInput(
@@ -1009,7 +1022,20 @@ server <- function(input, output, session) {
         } else
             if (input$DefOrUserUpload_W == 'Default_Data_Portland') {
                 if (input$AreaVsScen == 'allscen') {
-                    
+                    pickerInput(
+                        "Wshed_wshed_S",
+                        "Select the scenarios of interest",
+                        unique(Wshed_data()$Scenario),
+                        selected =   unique(Wshed_data()$Scenario)[1:10],
+                        multiple = TRUE,
+                        options = list(
+                            `actions-box` = TRUE,
+                            `header` = "Select scenarios ",
+                            `windowPadding` = 1,
+                            `width` = " css-width ",
+                            `size` = 6
+                        )
+                    ) 
                 } else
                     if (input$AreaVsScen == 'allwat') {
                         pickerInput(
@@ -1031,7 +1057,20 @@ server <- function(input, output, session) {
             } else
                 if (input$DefOrUserUpload_W == 'Default_Data_Seattle') {
                     if (input$AreaVsScen == 'allscen') {
-                        
+                        pickerInput(
+                            "Wshed_wshed_S",
+                            "Select the scenarios of interest",
+                            unique(Wshed_data()$Scenario),
+                            selected =   unique(Wshed_data()$Scenario)[1:10],
+                            multiple = TRUE,
+                            options = list(
+                                `actions-box` = TRUE,
+                                `header` = "Select scenarios ",
+                                `windowPadding` = 1,
+                                `width` = " css-width ",
+                                `size` = 6
+                            )
+                        ) 
                     } else
                         if (input$AreaVsScen == 'allwat') {
                             pickerInput(
@@ -1053,7 +1092,20 @@ server <- function(input, output, session) {
                 } else
                     if (input$DefOrUserUpload_W == 'Default_Data_LT') {
                         if (input$AreaVsScen == 'allscen') {
-                            
+                            pickerInput(
+                                "Wshed_wshed_S",
+                                "Select the scenarios of interest",
+                                unique(Wshed_data()$Scenario),
+                                selected =   unique(Wshed_data()$Scenario)[1:10],
+                                multiple = TRUE,
+                                options = list(
+                                    `actions-box` = TRUE,
+                                    `header` = "Select scenarios ",
+                                    `windowPadding` = 1,
+                                    `width` = " css-width ",
+                                    `size` = 6
+                                )
+                            ) 
                         } else
                             if (input$AreaVsScen == 'allwat') {
                                 pickerInput(
@@ -1079,7 +1131,20 @@ server <- function(input, output, session) {
                     } else
                         if (input$DefOrUserUpload_W == 'Default_Data_Palouse') {
                             if (input$AreaVsScen == 'allscen') {
-                                
+                                pickerInput(
+                                    "Wshed_wshed_S",
+                                    "Select the scenarios of interest",
+                                    unique(Wshed_data()$Scenario),
+                                    selected =   unique(Wshed_data()$Scenario)[1:10],
+                                    multiple = TRUE,
+                                    options = list(
+                                        `actions-box` = TRUE,
+                                        `header` = "Select scenarios ",
+                                        `windowPadding` = 1,
+                                        `width` = " css-width ",
+                                        `size` = 6
+                                    )
+                                )  
                             } else
                                 if (input$AreaVsScen == 'allwat') {
                                     pickerInput(
@@ -4779,7 +4844,8 @@ server <- function(input, output, session) {
         req(Wshed_data())
         req(input$AreaVsScen)
         if (input$AreaVsScen == 'allscen') {
-            Wshed_data() %>% dplyr::filter(Watershed %in% input$Wshed_wshed)
+            Wshed_data() %>% dplyr::filter(Watershed %in% input$Wshed_wshed,
+                                           Scenario %in% input$Wshed_wshed_S)
         } else
             if (input$AreaVsScen == 'allwat') {
                 Wshed_data() %>% dplyr::filter(Scenario %in% input$Wshed_wshed,
@@ -4990,8 +5056,19 @@ server <- function(input, output, session) {
         } else
             if (input$AreaVsScen == 'allwat') {
                 if (input$ScenVvar == "Heatmap") {
-                    d <-
-                        Wshed_subset() %>% dplyr::select(Watershed, input$wshed_var) %>% dplyr::mutate_if(is.numeric, scale)
+                    
+                    if (length(unique(Wshed_subset()$Watershed))<2) {
+                        d <-
+                            Wshed_subset() %>% dplyr::select(Watershed, input$wshed_var) %>% dplyr::mutate_at(vars(Watershed), as.factor)
+                    }else
+                        if (length(unique(Wshed_subset()$Watershed))>=2) {
+                            d <-
+                                Wshed_subset() %>% dplyr::select(Watershed, input$wshed_var) %>% 
+                                dplyr::mutate_at(vars(Watershed), as.factor)%>% 
+                                dplyr::mutate_if(is.numeric, scale)}
+                    
+                    # d <-
+                    #     Wshed_subset() %>% dplyr::select(Watershed, input$wshed_var) %>% dplyr::mutate_if(is.numeric, scale)
                     d.m <- reshape2::melt(d)
                     
                     
@@ -5035,7 +5112,17 @@ server <- function(input, output, session) {
                     
                 } else
                     if (input$ScenVvar == "Bar Chart") {
-                        d <-  Wshed_subset() %>% dplyr::select(Watershed, input$wshed_var)
+                        
+                        if (length(unique(Wshed_subset()$Watershed))<2) {
+                            d <-
+                                Wshed_subset() %>% dplyr::select(Watershed, input$wshed_var) %>% dplyr::mutate_at(vars(Watershed), as.factor)
+                        }else
+                            if (length(unique(Wshed_subset()$Watershed))>=2) {
+                                d <-
+                                    Wshed_subset() %>% dplyr::select(Watershed, input$wshed_var) %>% 
+                                    dplyr::mutate_at(vars(Watershed), as.factor)%>% 
+                                    dplyr::mutate_if(is.numeric, scale)}
+                        # d <-  Wshed_subset() %>% dplyr::select(Watershed, input$wshed_var)
                         
                         d.m <- reshape2::melt(d)
                         
