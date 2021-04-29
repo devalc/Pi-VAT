@@ -83,7 +83,7 @@ ui <- navbarPage(
                         )
                     ),
                     tags$a(
-                        href = "https://github.com/devalc/ShinyWMPT",
+                        href = "https://github.com/devalc/In-WPaT",
                         tags$img(
                             src = "GitHub-Mark.png",
                             style = "position:fixed;right: 10px;top: 5px;padding-bottom:10px;",
@@ -123,7 +123,7 @@ ui <- navbarPage(
    #                         primary = "#C27878", secondary = "#78C2AD", success = "#676262", 
    #                         info = "#6CBCD5", danger = "#FF7A51"),
    
-   theme = bslib::bs_theme(bootswatch = "minty"),
+   # theme = bslib::bs_theme(bootswatch = "minty"),
    
    
     
@@ -136,123 +136,147 @@ ui <- navbarPage(
         "Home",
         icon = icon("home"),
         
-        tags$head(includeHTML((
-            "google-analytics.html"
-        ))),
+        # tags$head(includeHTML((
+        #     "google-analytics.html"
+        # ))),
         
         
         use_sever(),
         #h1("sever" )
-        
-        # mainPanel(style = "background-color:#d5c4c4"
-            fluidPage(HTML("<br style = “line-height:10;”><br>"),
-                HTML("<br>"),
-                fluidRow(
-                    column(
-                        12,
-                        # offset = 1,
-                        align  = "center",
-                        
-                        HTML(
-                            '<div  class="jumbotron" >
-                                                      <h1  style="">Viz-WEPPcloud </h1>
-                                                      <h4  style="">A post-processing tool for identifying and examining impacts of management on pollutant 
-                                                      source areas in large spatially explicit watershed output files.</h4>
-                                                      </div>'
-                        ) #  <a href="https://wepp1.nkn.uidaho.edu/weppcloud/" title="Description">WEPPcloud</a> 
-                        
-                    )
-                ),
-                
-                fluidRow(
-                    # column(
-                    #     12,
-                        # offset = 1,
-                    #     align  = "center",
-                        column(3,
-                               align  = "center",
-                               # offset = 1,
-                               thumbnail_label1(
-                                   image = 'background.jpg',
-                                   label = 'Watershed Analysis',
-                                   content = "Inter-watershed comparison of impacts of management on annual water yield and 
+        fluidPage(HTML("<br style = 'line-height:10;'><br>"),
+                  HTML("<br><br>"),
+                  
+                  # fluidRow(
+                  div(class = "banner",
+                      tags$style(HTML("
+                                      .banner{
+                                      position: relative;
+                                      background-image: url('banner-bk_g.jpg');
+                                      background-repeat: no-repeat;
+                                      background-size: cover;
+                                      height: 300px;
+                                      border-style: none!important;
+                                      }"
+                      )
+                      ),
+                      div(class = "bannerright",
+                      # tags$h1("In-WPaT"),
+                      tags$h2(("An Interactive Watershed Prioritization and Targeting tool for synthesis and decision support using outputs from spatially complex, geospatial water quality models.")),
+                      tags$style(HTML("
+                                      .bannerright{position: absolute;top: 5%;right: 40%;;left: 18%;
+                                      background-color:#59ebeb; opacity: 0.7;transition: margin 10s;}"))
+                      ),
+                      div(class = "bannerleft",
+                          tags$img(src= "In-WPaT_hex.svg", height =300)
+                          ),
+                      
+                      ),
+                  HTML("<br/>"),
+                  
+                  fluidRow(align  = "center",
+                  column(width=3,
+                         align = "centre",
+                         
+                         thumbnail_label1(
+                                        image = 'background.jpg',
+                                        label = 'Watershed Analysis',
+                                        content = "Inter-watershed comparison of impacts of management on annual water yield and
                                       water quality at the watershed outlet"
-                               ),
-                               actionBttn("Wbutton", "Navigate to Watershed", icon = icon("line-chart"),style = "pill",
-                                          color = "success")
-                        ),
-                        column(
-                            3,
-                            align  = "center",
-                            thumbnail_label1(
-                                image = 'hillslope_img.jpg',
-                                label = 'Hillslope Analysis',
-                                content = 'Identifying targeted pollutant hotspots within a watershed and quantifying the impacts of disturbance
-                                      and management on the detachment and delivery of pollutants from these hotspots'
-                            ),
-                            actionBttn("Hbutton", "Navigate to Hillslope", icon = icon("line-chart"),style = "pill",
-                                       color = "success")
-                        ),
-                        column(
-                            3,
-                            align  = "center",
-                            thumbnail_label1(
-                                image = 'spatial_imp.PNG',
-                                label = 'Spatial Visualization',
-                                content = 'Visualize hillslope scale output and targeted hotspots across multiple watersheds for multiple treatments.'
-                            ),
-                            actionBttn("Sbutton", "Navigate to Spatial-Viz", icon = icon("layer-group"),style = "pill",
-                                       color = "success")
-                        ),
-                        column(
-                            3,
-                            align  = "center",
-                            thumbnail_label1(
-                                image = 'hru1.jpg',
-                                label = 'SWAT-Viz',
-                                content = 'Visualize hydrologic response unit (HRU) scale output and targeted hotspots across multiple watersheds for multiple treatments.'
-                            ),
-                            actionBttn("Swatbutton", "Navigate to SWAT-Viz", icon = icon("layer-group"),style = "pill",
-                                       color = "success")
-                        )
-                    # )
-                ),
-                HTML("<br style = “line-height:10;”><br>"),
-                fluidRow(
-                    column(
-                        12,
-                        # offset = 3,
-                        align  = "center",
-                        
-                        style = "height:140px;padding-left:20px;padding-top:20px;padding-bottom:20px;background-color:#AA9F8D", #background-color:#eae2e2;#F8F9FA;
-                        
-                       tags$div(
-                           tags$p(
-                               "Viz-WEPPcloud is currently designed to analyze output from WEPPcloud and provides an option for users to upload their own output data files.",
-                               align = "center"
-                           ),
-                           tags$p(
-                               a(href = 'https://wepp1.nkn.uidaho.edu/weppcloud/', 'WEPPcloud', .noWS = "outside"),
-                               ' is a cloud based simulation tool based on the process based Watershed Erosion Prediction Project',
-                               tags$a(href="https://www.fs.usda.gov/ccrc/tools/watershed-erosion-prediction-project",
-                                      "(WEPP)"), 'model. It estimates
+                                    ),
+                                    actionBttn("Wbutton", "Navigate to Watershed", icon = icon("line-chart"),style = "pill",
+                                               color = "success")
+                  ),
+                  column(width=3,
+                         align = "centre",
+                         
+                         thumbnail_label1(
+                             image = 'hillslope_img.jpg',
+                             label = 'Hillslope Analysis',
+                             content = "Identifying targeted pollutant hotspots within a watershed and quantifying the impacts of disturbance
+                                      and management on the detachment and delivery of pollutants from these hotspots"
+                         ),
+                         actionBttn("Hbutton", "Navigate to Hillslope", icon = icon("line-chart"),style = "pill",
+                                    color = "success")
+                  ),
+                  column(width=3,
+                         align = "centre",
+                         
+                         thumbnail_label1(
+                             image = 'spatial_imp.PNG',
+                             label = 'Spatial Visualization',
+                             content = "Identifying targeted pollutant hotspots within a watershed and quantifying the impacts of disturbance
+                                      and management on the detachment and delivery of pollutants from these hotspots"
+                         ),
+                         actionBttn("Sbutton", "Navigate to Spatial-Viz", icon = icon("line-chart"),style = "pill",
+                                    color = "success")
+                  ),
+                  column(width=3,
+                         align = "centre",
+                         
+                         thumbnail_label1(
+                             image = 'hru1.jpg',
+                             label = 'SWAT-Viz',
+                             content = "Synthesize and visualize subbasin,reach,and HRU scale outputs and targeted HRU scale hotspots across multiple watersheds for multiple treatments."
+                         ),
+                         actionBttn("Swatbutton", "Navigate to SWAT-Viz", icon = icon("line-chart"),style = "pill",
+                                    color = "success")
+                  )
+                  ),
+                  HTML("<br/>"),
+                  
+                  div(class = "footer",
+                          tags$style(HTML("
+                                      .footer{
+                                      position: relative;
+                                      background-image: url('footerimg1.jpg');
+                                      background-repeat: no-repeat;
+                                      background-size: cover;
+                                      height: 200px;
+                                      border-style: none!important;
+                                      margin:0%
+                                      }"
+                          )),
+                    div(class = "footerright",
+                              tags$p(
+                                  "In-WPaT is currently designed to analyze outputs from the online interface for WEPP model (WEPPcloud) and SWAT model. It provides an option for users to upload their own runs.",
+                                  align = "left"
+                              ),
+                              tags$p(
+                                  a(href = 'https://wepp1.nkn.uidaho.edu/weppcloud/', 'WEPPcloud', .noWS = "outside"),
+                                  ' is a cloud based simulation tool based on the process based Watershed Erosion Prediction Project',
+                                  tags$a(href="https://www.fs.usda.gov/ccrc/tools/watershed-erosion-prediction-project",
+                                         "(WEPP)"), 'model. It estimates
                                                          hillslope soil erosion, runoff, and sediment yields from anywhere in the continental U.S. It is especially useful for
                                                          post-wildfire assessments, fuel treatment planning, and prescribed fire analysis.',
-                               .noWS = c("after-begin", "before-end"),
-                               align = "center"
-                           ),
-
-                       )
+                                  .noWS = c("after-begin", "before-end"),
+                                  align = "left"
+                              ),
+                              tags$style(HTML("
+                                      .footerright{position: absolute;top: 30%;right: 5%;;left: 40%;color:#fff
+                                      }"))
+                          ),
+                    div(class = "footerleft",
                         
-                    )
-                )
-                
-                )
-            
-            
-            # HTML("<br style = “line-height:30;”><br>"),
-           
-        
+                        tags$h3("Built with",
+                               img(src = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png",
+                                   height= 80),
+                               "and",
+                               img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/Rstudio-Logo-Blue-Gray.png",
+                                   height= 80),
+                               tags$style(HTML("
+                                      .footerleft{position: absolute;top: 20%;right: 70%;;left: 5%;color:#fff
+                                      }"))
+                                   
+                               
+                            )
+                        )
+                        
+                        )
+                          
+
+                  
+                  
+        )
     ),
     
     
@@ -261,9 +285,9 @@ ui <- navbarPage(
     tabPanel(
         "Watershed",
         
-        tags$head(includeHTML((
-            "google-analytics.html"
-        ))),
+        # tags$head(includeHTML((
+        #     "google-analytics.html"
+        # ))),
         
         
         
@@ -359,9 +383,9 @@ ui <- navbarPage(
     tabPanel(
         "Hillslope",
         
-        tags$head(includeHTML((
-            "google-analytics.html"
-        ))),
+        # tags$head(includeHTML((
+        #     "google-analytics.html"
+        # ))),
         
         
         
@@ -498,9 +522,9 @@ ui <- navbarPage(
     tabPanel(
         "Spatial-Viz",
         
-        tags$head(includeHTML((
-            "google-analytics.html"
-        ))),
+        # tags$head(includeHTML((
+        #     "google-analytics.html"
+        # ))),
         
         style = 'padding-top:70px;',
         
@@ -617,9 +641,9 @@ ui <- navbarPage(
     tabPanel(
         "SWAT-Viz",
         
-        tags$head(includeHTML((
-            "google-analytics.html"
-        ))),
+        # tags$head(includeHTML((
+        #     "google-analytics.html"
+        # ))),
         
         
         

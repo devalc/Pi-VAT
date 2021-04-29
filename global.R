@@ -20,12 +20,12 @@
 
 
 thumbnail_label1 <- function(image, label, content){
-    div(class = "row", style="height:370px",
+    div(class = "row", style="height:400px",
         div(class = "col-sm-14 col-md-12",
-            div(class = "thumbnail",style="height:50px",
+            div(class = "thumbnail",
                 img(src = image, alt = "...", width ="100%",
                     div(class = "caption",style="max-width: 100%;text-align:centre",
-                        h4(label)), div(class = "description",style="max-width:90%;text-justify:inter-word", p(content)
+                        h2(label)), div(class = "description",style="max-width:90%;text-justify:inter-word", h5(content)
                     )))))
 }
 
