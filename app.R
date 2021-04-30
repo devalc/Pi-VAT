@@ -104,27 +104,19 @@ ui <- navbarPage(
     ## ----------------------------------Set Theme------------------------------------------##
     ## set the theme
     
-   # theme = bslib:: bs_theme(
-   #      bg = "#202123", 
-   #      fg = "#B8BCC2", 
-   #      primary = "#EA80FC", 
-   #      secondary = "#1900A0",
-   #      success = "#38FF12",
-   #      info = "#00F5FB",
-   #      warning = "#FFF100",
-   #      danger = "#FF00E3",
-   #      # base_font = "Marker Felt",
-   #      heading_font = bslib::font_google("Oswald"),
-   #      # code_font = "Chalkduster",
-   #      base_font = bslib::font_google("Oswald")
-   #  ),
-   #d4c7b0
-   # theme = bslib::bs_theme(bootswatch = "minty", bg = "#d4c7b0", fg = "#000", 
-   #                         primary = "#C27878", secondary = "#78C2AD", success = "#676262", 
-   #                         info = "#6CBCD5", danger = "#FF7A51"),
-   
-   # theme = bslib::bs_theme(bootswatch = "minty"),
-   
+   theme = bslib::bs_theme(bootswatch = "minty",
+     bg = "#202123", 
+     fg = "#E4E4E4", 
+     primary = "#EA80FC", 
+     secondary = "#00DAC6",
+     success = "#86d57b",
+     info = "#28B3ED",
+     warning = "#FD7424",
+     danger = "#F7367E",
+     base_font = font_google("Open Sans"),
+     heading_font = font_google("Proza Libre"),
+     code_font = font_google("Fira Code")
+   ),
    
     
     ## ----------------------------------Start defining Tabs------------------------------------------##
@@ -144,7 +136,7 @@ ui <- navbarPage(
         use_sever(),
         #h1("sever" )
         fluidPage(HTML("<br style = 'line-height:10;'><br>"),
-                  HTML("<br><br>"),
+                  HTML("<br>"),
                   
                   # fluidRow(
                   div(class = "banner",
@@ -164,7 +156,7 @@ ui <- navbarPage(
                       tags$h2(("An Interactive Watershed Prioritization and Targeting tool for synthesis and decision support using outputs from spatially complex, geospatial water quality models.")),
                       tags$style(HTML("
                                       .bannerright{position: absolute;top: 5%;right: 40%;;left: 18%;
-                                      background-color:#59ebeb; opacity: 0.7;transition: margin 10s;}"))
+                                      background-color:#59ebeb; color:#fff;transition: margin 10s;}"))
                       ),
                       div(class = "bannerleft",
                           tags$img(src= "In-WPaT_hex.svg", height =300)
@@ -183,8 +175,9 @@ ui <- navbarPage(
                                         content = "Inter-watershed comparison of impacts of management on annual water yield and
                                       water quality at the watershed outlet"
                                     ),
+                         HTML("<br/>"),
                                     actionBttn("Wbutton", "Navigate to Watershed", icon = icon("line-chart"),style = "pill",
-                                               color = "success")
+                                               color = "royal")
                   ),
                   column(width=3,
                          align = "centre",
@@ -195,8 +188,9 @@ ui <- navbarPage(
                              content = "Identifying targeted pollutant hotspots within a watershed and quantifying the impacts of disturbance
                                       and management on the detachment and delivery of pollutants from these hotspots"
                          ),
+                         HTML("<br/>"),
                          actionBttn("Hbutton", "Navigate to Hillslope", icon = icon("line-chart"),style = "pill",
-                                    color = "success")
+                                    color = "royal")
                   ),
                   column(width=3,
                          align = "centre",
@@ -207,8 +201,9 @@ ui <- navbarPage(
                              content = "Identifying targeted pollutant hotspots within a watershed and quantifying the impacts of disturbance
                                       and management on the detachment and delivery of pollutants from these hotspots"
                          ),
+                         HTML("<br/>"),
                          actionBttn("Sbutton", "Navigate to Spatial-Viz", icon = icon("line-chart"),style = "pill",
-                                    color = "success")
+                                    color = "royal")
                   ),
                   column(width=3,
                          align = "centre",
@@ -218,17 +213,18 @@ ui <- navbarPage(
                              label = 'SWAT-Viz',
                              content = "Synthesize and visualize subbasin,reach,and HRU scale outputs and targeted HRU scale hotspots across multiple watersheds for multiple treatments."
                          ),
+                         HTML("<br/>"),
                          actionBttn("Swatbutton", "Navigate to SWAT-Viz", icon = icon("line-chart"),style = "pill",
-                                    color = "success")
+                                    color = "royal")
                   )
                   ),
-                  HTML("<br/>"),
+                  HTML("<br/><br/>"),
                   
                   div(class = "footer",
                           tags$style(HTML("
                                       .footer{
                                       position: relative;
-                                      background-image: url('footerimg1.jpg');
+                                      background-image: url('footerimg4.jpg');
                                       background-repeat: no-repeat;
                                       background-size: cover;
                                       height: 200px;
@@ -252,19 +248,19 @@ ui <- navbarPage(
                                   align = "left"
                               ),
                               tags$style(HTML("
-                                      .footerright{position: absolute;top: 30%;right: 5%;;left: 40%;color:#fff
+                                      .footerright{position: absolute;top: 20%;right: 5%;;left: 40%;color:#fff
                                       }"))
                           ),
                     div(class = "footerleft",
                         
-                        tags$h3("Built with",
+                        tags$h3("Powered by",
                                img(src = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png",
                                    height= 80),
                                "and",
-                               img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/Rstudio-Logo-Blue-Gray.png",
+                               img(src = "https://www.r-project.org/logo/Rlogo.svg",
                                    height= 80),
                                tags$style(HTML("
-                                      .footerleft{position: absolute;top: 20%;right: 70%;;left: 5%;color:#fff
+                                      .footerleft{position: absolute;top: 20%;right: 60%;;left: 5%;color:#fff
                                       }"))
                                    
                                
