@@ -2774,7 +2774,7 @@ server <- function(input, output, session) {
                     placeholder = "No file selected",
                     accept = c(".RDS", ".qs")
                 )%>%
-                    helper(icon = "question-circle",
+                    helper(icon = "question-circle",colour = "#FF0000",
                            content = "SWAT_upload_sub",
                            type = "markdown", size = "l",
                            buttonLabel = "Okay", easyClose = TRUE, fade = TRUE)
@@ -2787,7 +2787,7 @@ server <- function(input, output, session) {
                         placeholder = "No file selected",
                         accept = c(".RDS", ".qs", ".csv")
                     )%>%
-                        helper(icon = "question-circle",
+                        helper(icon = "question-circle",colour = "#FF0000",
                                content = "SWAT_upload_rch",
                                type = "markdown", size = "l",
                                buttonLabel = "Okay", easyClose = TRUE, fade = TRUE)
@@ -2800,7 +2800,7 @@ server <- function(input, output, session) {
                             placeholder = "No file selected",
                             accept = c(".RDS", ".qs")
                         )%>%
-                            helper(icon = "question-circle",
+                            helper(icon = "question-circle",colour = "#FF0000",
                                    content = "SWAT_upload_hru",
                                    type = "markdown", size = "l",
                                    buttonLabel = "Okay", easyClose = TRUE, fade = TRUE)
@@ -2888,54 +2888,6 @@ server <- function(input, output, session) {
                         }
             }
     })
-    
-    
-    
-    # SWAT_data <- reactive({
-    #         req(SWAT_data1())
-    #         req(input$which_file)
-    #             if(input$which_file == 'Subbasin'){
-    #                 SWAT_data1()%>%sf::st_set_crs(value = 4326)
-    #             }else
-    #                 if(input$which_file == 'Reach'){
-    #                     SWAT_data1()
-    #                 }else
-    #                     if(input$which_file == 'HRU'){
-    #                         SWAT_data1()%>%sf::st_set_crs(value = 4326)
-    #                     }
-    #         })
-    
-    # SWAT_data <- reactive({
-    #         req(SWAT_data1())
-    #         req(input$DefOrUserUpload_SWAT)
-    #         if (input$DefOrUserUpload_SWAT == 'Default_Data_WE38') {
-    #             req(input$which_file)
-    #             if(input$which_file == 'Subbasin'){
-    #                 SWAT_data1() 
-    #             }else
-    #                 if(input$which_file == 'Reach'){
-    #                     SWAT_data1()
-    #                 }else
-    #                     if(input$which_file == 'HRU'){
-    #                         SWAT_data1() 
-    #                     }
-    # 
-    #         }else
-    #             if (input$DefOrUserUpload_SWAT == 'Upload data'){
-    #                 req(input$which_file)
-    #                 if(input$which_file == 'Subbasin'){
-    #                     SWAT_data1() %>%sf::st_set_crs(value = 4326)
-    #                 }else
-    #                     if(input$which_file_up == 'HRU'){
-    #                         SWAT_data1() %>%sf::st_set_crs(value = 4326)
-    #                     }else
-    #                         if(input$which_file == 'Reach'){
-    #                             SWAT_data1()
-    # 
-    #                         }
-    #             }
-    #     })
-    
     
     
     
@@ -3236,55 +3188,6 @@ server <- function(input, output, session) {
             }
     })
     
-    
-    
-    # output$SWAT_wshed_mgmt_optns <- renderUI({
-    #     if (input$DefOrUserUpload_SWAT == 'Upload data') {
-    #         req(SWAT_data())
-    #         req(input$which_file)
-    #         if(input$which_file == 'Reach'){
-    #             awesomeRadio(
-    #                 inputId = "AreaVsScen_swat",
-    #                 label = "Management/Watershed Options: ",
-    #                 choices = c(
-    #                     "One Watershed, All Scenarios" = "allscen_swat",
-    #                     "One Scenario, Selected Watersheds" =
-    #                         "allwat_swat"
-    #                 ),
-    #                 selected = "allscen_swat",
-    #                 status = 'warning'
-    #             )
-    #         }else
-    #             if(input$which_file == 'HRU'){
-    #                 return()
-    #             }else
-    #                 if(input$which_file == 'Subbasin'){
-    #                     return()  
-    #                 }
-    #     } else
-    #         if (input$DefOrUserUpload_SWAT == 'Default_Data_WE38') {
-    #             req(input$which_file)
-    #             if(input$which_file == 'Reach'){
-    #                 awesomeRadio(
-    #                     inputId = "AreaVsScen_swat",
-    #                     label = "Management/Watershed Options: ",
-    #                     choices = c(
-    #                         "One Watershed, All Scenarios" = "allscen_swat",
-    #                         "One Scenario, Selected Watersheds" =
-    #                             "allwat_swat"
-    #                     ),
-    #                     selected = "allscen_swat",
-    #                     status = 'warning'
-    #                 )
-    #             }else
-    #                 if(input$which_file == 'HRU'){
-    #                     return()
-    #                 }else
-    #                     if(input$which_file == 'Subbasin'){
-    #                         return()
-    #                     }
-    #         }
-    # })
     
     
     output$SWAT_reachno <- renderUI({
@@ -3820,54 +3723,7 @@ server <- function(input, output, session) {
     })
     
     
-    # output$SWAT_viz_optns <- renderUI({
-    #     if (input$DefOrUserUpload_SWAT == 'Upload data') {
-    #         req(SWAT_data())
-    #         req(input$which_file)
-    #         if(input$which_file == 'Subbasin'){
-    #             
-    #         }else
-    #             if(input$which_file == 'Reach'){
-    #                 
-    #                 radioGroupButtons(
-    #                     inputId = "rch_viz_options",
-    #                     label = "Select Output",
-    #                     choices = c("Heatmap", "Bar Plot"),
-    #                     selected = "Heatmap",
-    #                     checkIcon = list(
-    #                         yes = icon("ok",
-    #                                    lib = "glyphicon"))
-    #                 )
-    #                 
-    #                 
-    #             }else
-    #                 if(input$which_file == 'HRU'){
-    #                     
-    #                 }
-    #     } else
-    #         if (input$DefOrUserUpload_SWAT == 'Default_Data_WE38') {
-    #             req(input$which_file)
-    #             if(input$which_file == 'Subbasin'){
-    #             
-    #         }else
-    #             if(input$which_file == 'Reach'){
-    #                 radioGroupButtons(
-    #                     inputId = "rch_viz_options",
-    #                     label = "Visualization type:",
-    #                     choices = c("Heatmap", "Bar Chart"),
-    #                     selected = "Heatmap",
-    #                     checkIcon = list(
-    #                         yes = icon("ok",
-    #                                    lib = "glyphicon"))
-    #                 )    
-    #             }else
-    #                 if(input$which_file == 'HRU'){
-    #                     
-    #                 }
-    # }
-    # })
     
-   
     
     ## -----------------------------------------------------------------------------------------------------------##
     ## ---------------------------------Dataframe Calculations for Reach df SWAT-------------------------------------------------------##
