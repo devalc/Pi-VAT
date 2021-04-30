@@ -1,0 +1,14 @@
+name: In-WPaT
+title: In-WPaT
+username:
+account: cdeval
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4060109
+bundleId: 4541564
+url: https://cdeval.shinyapps.io/In-WPaT/
+when: 1619817668.02896
+lastSyncTime: 1619817668.02896
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .gitattributes|Other_R/hex_In-WPaT.R|Other_R/summarise_swat_hru_results.R|Other_R/summarise_swat_reach_results.R|Other_R/summarise_swat_subbasin_results.R|README.md
