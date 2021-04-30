@@ -16,6 +16,6 @@ repurpose for synthesizing your runs:
 
 [Templates for the input data (also used as default data in the tool) are available at:] {<https://github.com/devalc/In-WPaT/tree/main/data>}
 
--- HRU template file has "__hru__" in the filename
--- Reach template file has "__rch__" in the filename
--- Subbasin template file has "__sub__" in the filename
+- HRU template file has "__hru__" in the filename
+- Reach template file has "__rch__" in the filename
+- Subbasin template file has "__sub__" in the filename
