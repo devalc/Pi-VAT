@@ -664,7 +664,17 @@ ui <- navbarPage(
                         ),
                         selected = "Default_Data_WE38",
                         status = 'success'
-                    ),
+                    )%>%
+                      helper(
+                        icon = "question-circle",
+                        colour = "#FF0000",
+                        content = "SWAT_upload",
+                        type = "markdown",
+                        size = "l",
+                        buttonLabel = "Okay",
+                        easyClose = TRUE,
+                        fade = TRUE
+                      ),
                     
                     
                     uiOutput("SWAT_FileInput"),
