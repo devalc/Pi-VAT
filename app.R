@@ -156,7 +156,7 @@ ui <- navbarPage(
                       tags$h2(("An Interactive Watershed Prioritization and Targeting tool for synthesis and decision support using outputs from spatially complex, geospatial water quality models.")),
                       tags$style(HTML("
                                       .bannerright{position: absolute;top: 5%;right: 40%;;left: 18%;
-                                      background-color:#59ebeb; color:#fff;transition: margin 10s;}"))
+                                      background-color:#3F2D53; color:#fff;transition: margin 10s;}"))
                       ),
                       div(class = "bannerleft",
                           tags$img(src= "In-WPaT_hex.svg", height =300)
@@ -2680,8 +2680,7 @@ server <- function(input, output, session) {
         if(input$which_file == 'Subbasin'){
             tabsetPanel(
                 tabPanel("Subwatersheds",icon =icon("layer-group"),style = 'padding:20px;',
-                         leaflet::leafletOutput("Plotsub", height = "600px", width =
-                                          "800px") %>% withSpinner(type = 8 )),
+                         leaflet::leafletOutput("Plotsub", height = "600px") %>% withSpinner(type = 8 )),
                 tabPanel("Table",icon =icon("tablesub"),style = 'padding:20px;',
                          DT::dataTableOutput("tablesub")  %>% withSpinner(type = 8 ))
             )
@@ -2699,8 +2698,7 @@ server <- function(input, output, session) {
                 if(input$which_file == 'HRU'){
                     tabsetPanel(
                         tabPanel("HRUs",icon =icon("layer-group"),style = 'padding:20px;',
-                                 leaflet::leafletOutput("Plothru", height = "600px", width =
-                                                  "800px") %>% withSpinner(type = 8 )),
+                                 leaflet::leafletOutput("Plothru", height = "600px") %>% withSpinner(type = 8 )),
                         tabPanel("Table",icon =icon("table"),style = 'padding:20px;',
                                  DT::dataTableOutput("tablehru")  %>% withSpinner(type = 8 ))
                     )
@@ -4064,6 +4062,10 @@ server <- function(input, output, session) {
             scrollX = 200,
             scroller = TRUE,
             dom = 'BRSfrti',
+            initComplete = JS(
+                "function(settings, json) {",
+                "$(this.api().table().container()).css({'background-color': '#fff'});",
+                "}"),
             buttons =
                 list(
                     'copy',
@@ -4099,6 +4101,10 @@ server <- function(input, output, session) {
             scrollX = 200,
             scroller = TRUE,
             dom = 'BRSfrti',
+            initComplete = JS(
+                "function(settings, json) {",
+                "$(this.api().table().container()).css({'background-color': '#fff'});",
+                "}"),
             buttons =
                 list(
                     'copy',
@@ -4688,6 +4694,10 @@ server <- function(input, output, session) {
             scrollX = 200,
             scroller = TRUE,
             dom = 'BRSfrti',
+            initComplete = JS(
+                "function(settings, json) {",
+                "$(this.api().table().container()).css({'background-color': '#fff'});",
+                "}"),
             buttons =
                 list(
                     'copy',
@@ -5854,6 +5864,10 @@ server <- function(input, output, session) {
             scrollX = 200,
             scroller = TRUE,
             dom = 'BRSfrti',
+            initComplete = JS(
+                "function(settings, json) {",
+                "$(this.api().table().container()).css({'background-color': '#fff'});",
+                "}"),
             buttons =
                 list('copy', 'print', list(
                     extend = 'collection',
@@ -5922,7 +5936,11 @@ server <- function(input, output, session) {
         req(input$S_variable)
         req(Spatial_subset_base())
         req(input$S_scen_base)
-        tm2 <-tm_shape(Spatial_subset_comp(), name = "Difference between comparison & baseline scenario") +
+        tm2 <-tm_basemap(leaflet::providers$Esri.WorldImagery,group = "WorldImagery") +
+            tm_basemap(leaflet::providers$Esri.WorldTopoMap,group = "WorldTopoMap")  +
+            tm_basemap(leaflet::providers$OpenStreetMap, group = "OpenStreetMap")+
+            tm_basemap(leaflet::providers$Esri.WorldGrayCanvas,group = "WorldGrayCanvas") +
+            tm_shape(Spatial_subset_comp(), name = "Difference between comparison & baseline scenario") +
             tmap::tm_polygons(
                 paste0("AbsChange_", input$S_variable),
                 id = "watershed",
@@ -5940,7 +5958,7 @@ server <- function(input, output, session) {
                 style = "fixed",
                 breaks = c(0, 1, 10, 50, 250, 500, 750, 1000,
                            5000, 10000, 15000,Inf),
-                title = ""
+                title = "Baseline Scenario"
             )+
             tm_shape(Spatial_subset_comp(), name = "Comparison Scenario") +
             tmap::tm_polygons(
@@ -5951,8 +5969,8 @@ server <- function(input, output, session) {
                 style = "fixed",
                 breaks = c(0, 1, 10, 50, 250, 500, 750, 1000,
                            5000, 10000, 15000,Inf),
-                legend.show = FALSE,
-                # title = "Comparison Scenario"
+                # legend.show = TRUE,
+                title = "Comparison Scenario"
             ) +
             tmap::tm_layout(scale = 0.1,
                             title = "")
@@ -5960,7 +5978,8 @@ server <- function(input, output, session) {
         tmap_leaflet(tm2,in.shiny = TRUE)  %>%
             addMiniMap(tiles = providers$Esri.WorldStreetMap,
                        toggleDisplay = TRUE,
-                       zoomAnimation = TRUE,position = "bottomleft",height = 100)
+                       zoomAnimation = TRUE,position = "bottomleft",height = 100)%>%
+            leaflet::hideGroup(c("Comparison Scenario", "Baseline Scenario"))
     })
     
     
@@ -5978,7 +5997,11 @@ server <- function(input, output, session) {
         req(input$swat_var_sub)
         
         
-        tmsub<-tm_shape(SWATSub_data_comp(), name = "Difference between comparison & baseline scenario") +
+        tmsub<-tm_basemap(leaflet::providers$Esri.WorldImagery,group = "WorldImagery") +
+            tm_basemap(leaflet::providers$Esri.WorldTopoMap,group = "WorldTopoMap")  +
+            tm_basemap(leaflet::providers$OpenStreetMap, group = "OpenStreetMap")+
+            tm_basemap(leaflet::providers$Esri.WorldGrayCanvas,group = "WorldGrayCanvas") +
+            tm_shape(SWATSub_data_comp(), name = "Difference between comparison & baseline scenario") +
             tmap::tm_polygons(
                 paste0("AbsChange_",input$swat_var_sub),
                 id = "watershed",
@@ -6025,7 +6048,8 @@ server <- function(input, output, session) {
         tmap_leaflet(tmsub,in.shiny = TRUE)  %>%
                     addMiniMap(tiles = providers$Esri.WorldStreetMap,
                                toggleDisplay = TRUE,
-                               zoomAnimation = TRUE,position = "bottomleft",height = 100)
+                               zoomAnimation = TRUE,position = "bottomleft",height = 100)%>%
+            leaflet::hideGroup(c("Comparison Scenario", "Baseline Scenario"))
     })
     
     ## -----------------------------------------------------------------------------------------------------------##
@@ -6033,7 +6057,11 @@ server <- function(input, output, session) {
     ## -----------------------------------------------------------------------------------------------------------##
     
     output$Plothru <- leaflet::renderLeaflet({
-        tmhru<-tm_shape(SWATHru_data_comp(), name = "Difference between comparison & baseline scenario") +
+        tmhru<-tm_basemap(leaflet::providers$Esri.WorldImagery,group = "WorldImagery") +
+            tm_basemap(leaflet::providers$Esri.WorldTopoMap,group = "WorldTopoMap")  +
+            tm_basemap(leaflet::providers$OpenStreetMap, group = "OpenStreetMap")+
+            tm_basemap(leaflet::providers$Esri.WorldGrayCanvas,group = "WorldGrayCanvas") +
+            tm_shape(SWATHru_data_comp(), name = "Difference between comparison & baseline scenario") +
             tmap::tm_polygons(
                 paste0("AbsChange_",input$swat_var_hru),
                 id = "watershed",
@@ -6067,7 +6095,8 @@ server <- function(input, output, session) {
         tmap_leaflet(tmhru,in.shiny = TRUE)  %>%
             addMiniMap(tiles = providers$Esri.WorldStreetMap,
                        toggleDisplay = TRUE,
-                       zoomAnimation = TRUE,position = "bottomleft",height = 100)
+                       zoomAnimation = TRUE,position = "bottomleft",height = 100)%>%
+            leaflet::hideGroup(c("Comparison Scenario", "Baseline Scenario"))
         
     })
     
