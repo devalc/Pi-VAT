@@ -56,7 +56,7 @@ thematic_shiny(font = "auto")
 
 ui <- navbarPage(
     
-    title = div("In-WPaT",
+    title = div("Pi-VAT",
                 div(
                     tags$a(
                         href = "https://forest.moscowfsl.wsu.edu/fswepp/",
@@ -83,7 +83,7 @@ ui <- navbarPage(
                         )
                     ),
                     tags$a(
-                        href = "https://github.com/devalc/In-WPaT",
+                        href = "https://github.com/devalc/Pi-VAT",
                         tags$img(
                             src = "GitHub-Mark.png",
                             style = "position:fixed;right: 10px;top: 5px;padding-bottom:10px;",
@@ -152,14 +152,14 @@ ui <- navbarPage(
                       )
                       ),
                       div(class = "bannerright",
-                      # tags$h1("In-WPaT"),
+                      # tags$h1("Pi-VAT"),
                       tags$h2(("An Interactive Watershed Prioritization and Targeting tool for synthesis and decision support using outputs from spatially complex, geospatial water quality models.")),
                       tags$style(HTML("
                                       .bannerright{position: absolute;top: 5%;right: 40%;;left: 18%;
                                       background-color:#3F2D53; color:#fff;transition: margin 10s;}"))
                       ),
                       div(class = "bannerleft",
-                          tags$img(src= "In-WPaT_hex.svg", height =300)
+                          tags$img(src= "Pi-VAT_hex.svg", height =300)
                           ),
                       
                       ),
@@ -234,7 +234,7 @@ ui <- navbarPage(
                           )),
                     div(class = "footerright",
                               tags$p(
-                                  "In-WPaT is currently designed to analyze outputs from the online interface for WEPP model (WEPPcloud) and SWAT model. It provides an option for users to upload their own runs.",
+                                  "Pi-VAT is currently designed to analyze outputs from the online interface for WEPP model (WEPPcloud) and SWAT model. It provides an option for users to upload their own runs.",
                                   align = "left"
                               ),
                               tags$p(
