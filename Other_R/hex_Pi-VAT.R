@@ -92,3 +92,6 @@ ggsave("./www/Pi-VAT_hex.svg",device = "svg",width = 8,height = 8,
        plot = s,
        bg = "transparent")
 
+ggsave("./www/Pi-VAT_hex.png",device = "png",width = 8,height = 8,
+       plot = s,
+       bg = "transparent")
