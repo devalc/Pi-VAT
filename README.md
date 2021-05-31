@@ -1,5 +1,5 @@
 # Pi-VAT
-
+***
 <p align="center">
   <img src="https://raw.githubusercontent.com/devalc/In-WPaT/main/www/Pi-VAT_hex.svg" width=50%/>
 </p>
@@ -18,8 +18,6 @@ Based on the multi-watershed, multi-scenario simulations from these models this 
 
 
 ## How to prepare SWAT outputs for In-WPaT?
-
-***
 
 If you want to know how to create files from SWAT outputs that are compatible with this tool
 please click on the link below to navigate to an example R script that you can
