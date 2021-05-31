@@ -92,7 +92,7 @@ ui <- navbarPage(
                     )
                 )),
     
-    windowTitle = "In-WMPT",
+    windowTitle = "Pi-VAT",
     position = "fixed-top",
     # fluid = TRUE,
     collapsible = TRUE,
@@ -153,7 +153,7 @@ ui <- navbarPage(
                       ),
                       div(class = "bannerright",
                       # tags$h1("Pi-VAT"),
-                      tags$h2(("An Interactive Watershed Prioritization and Targeting tool for synthesis and decision support using outputs from spatially complex, geospatial water quality models.")),
+                      tags$h2(("An Interactive Watershed Prioritization and Targeting tool for synthesis and decision support using outputs from geospatial water quality models.")),
                       tags$style(HTML("
                                       .bannerright{position: absolute;top: 5%;right: 40%;;left: 18%;
                                       background-color:#3F2D53; color:#fff;transition: margin 10s;}"))
@@ -4845,8 +4845,21 @@ server <- function(input, output, session) {
         Wshed_subset <- Wshed_subset()
         if (input$AreaVsScen == 'allscen') {
             if (input$ScenVvar == "Heatmap") {
-                d <-
-                    Wshed_subset() %>% dplyr::select(Scenario, input$wshed_var) %>% dplyr::mutate_if(is.numeric, scale)
+                
+                if (length(unique(Wshed_subset()$Scenario))<2) {
+                    d <-
+                        Wshed_subset() %>% dplyr::select(Scenario, input$wshed_var) %>% 
+                        dplyr::mutate_at(vars(Scenario), as.factor)
+                }else
+                    if (length(unique(Wshed_subset()$Scenario))>=2) {
+                        d <-
+                            Wshed_subset() %>% dplyr::select(Scenario, input$wshed_var) %>% 
+                            dplyr::mutate_at(vars(Scenario), as.factor)%>% 
+                            dplyr::mutate_if(is.numeric, scale)}
+                
+                # d <-
+                #     Wshed_subset() %>% dplyr::select(Scenario, input$wshed_var) %>% dplyr::mutate_if(is.numeric, scale)
+                
                 d.m <- reshape2::melt(d)
                 
                 p <-
@@ -4899,18 +4912,12 @@ server <- function(input, output, session) {
                                share = (value / total) * 100) %>% dplyr::select(-total) %>%
                         ungroup()
                     
-                    b <- ggplot(d.m) +
-                        
-                        geom_bar(
-                            aes(
-                                y = share,
-                                x = variable,
-                                fill = reorder(Scenario, share)
-                                
-                            ),
-                            stat = "identity",
-                            position = "dodge"
-                        ) + guides(fill = FALSE)+
+                    b <- ggplot(d.m, 
+                                aes(fill=reorder(Scenario,share), 
+                                    y=share,
+                                    x=variable)) + 
+                        geom_bar(position="dodge", stat="identity")+
+                        guides(fill = FALSE)+
                         theme_bw(base_rect_size = 0.1) +
                         theme(
                             axis.text.x = element_text(
@@ -5019,16 +5026,16 @@ server <- function(input, output, session) {
                 } else
                     if (input$ScenVvar == "Bar Chart") {
                         
-                        if (length(unique(Wshed_subset()$Watershed))<2) {
-                            d <-
-                                Wshed_subset() %>% dplyr::select(Watershed, input$wshed_var) %>% dplyr::mutate_at(vars(Watershed), as.factor)
-                        }else
-                            if (length(unique(Wshed_subset()$Watershed))>=2) {
-                                d <-
-                                    Wshed_subset() %>% dplyr::select(Watershed, input$wshed_var) %>% 
-                                    dplyr::mutate_at(vars(Watershed), as.factor)%>% 
-                                    dplyr::mutate_if(is.numeric, scale)}
-                        # d <-  Wshed_subset() %>% dplyr::select(Watershed, input$wshed_var)
+                        # if (length(unique(Wshed_subset()$Watershed))<2) {
+                        #     d <-
+                        #         Wshed_subset() %>% dplyr::select(Watershed, input$wshed_var) %>% dplyr::mutate_at(vars(Watershed), as.factor)
+                        # }else
+                        #     if (length(unique(Wshed_subset()$Watershed))>=2) {
+                        #         d <-
+                        #             Wshed_subset() %>% dplyr::select(Watershed, input$wshed_var) %>% 
+                        #             dplyr::mutate_at(vars(Watershed), as.factor)%>% 
+                        #             dplyr::mutate_if(is.numeric, scale)}
+                        d <-  Wshed_subset() %>% dplyr::select(Watershed, input$wshed_var)
                         
                         d.m <- reshape2::melt(d)
                         
@@ -5040,17 +5047,12 @@ server <- function(input, output, session) {
                                    share = (value / total) * 100) %>%
                             ungroup()
                         
-                        b <- ggplot(d.m) +
-                            
-                            geom_bar(
-                                aes(
-                                    y = share,
-                                    x = variable,
-                                    fill = reorder(Watershed,share)
-                                ),
-                                stat = "identity",
-                                position = "dodge"
-                            )  +guides(fill = FALSE)+
+                        b <- ggplot(d.m, 
+                                    aes(fill=reorder(Watershed,share), 
+                                        y=share,
+                                        x=variable)) + 
+                            geom_bar(position="dodge", stat="identity")+
+                            guides(fill = FALSE)+
                             theme_bw(base_rect_size = 0.1) +
                             theme(
                                 axis.text.x = element_text(
