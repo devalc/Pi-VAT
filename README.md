@@ -19,8 +19,6 @@ Based on the multi-watershed, multi-scenario simulations from these models this 
 
 ## How to prepare SWAT outputs for In-WPaT?
 
-# How to prepare SWAT outputs for In-WPaT?
-
 ***
 
 If you want to know how to create files from SWAT outputs that are compatible with this tool
