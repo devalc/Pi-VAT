@@ -24,11 +24,11 @@ please click on the link below to navigate to an example R script that you can
 repurpose for synthesizing your runs:
 
 
-- [Summarize SWAT HRUs for IN-WPaT:]{<https://raw.githubusercontent.com/devalc/In-WPaT/main/Other_R/summarise_swat_hru_results.R>}
+- [Summarize SWAT HRUs for IN-WPaT:]{<https://raw.githubusercontent.com/devalc/Pi-VAT/main/Other_R/summarise_swat_hru_results.R>}
 
-- [Summarize SWAT RCH for IN-WPaT:]{<https://raw.githubusercontent.com/devalc/In-WPaT/main/Other_R/summarise_swat_reach_results.R>}
+- [Summarize SWAT RCH for IN-WPaT:]{<https://raw.githubusercontent.com/devalc/Pi-VAT/main/Other_R/summarise_swat_reach_results.R>}
 
-- [Summarize SWAT subbasin for IN-WPaT:]{<https://raw.githubusercontent.com/devalc/In-WPaT/main/Other_R/summarise_swat_subbasin_results.R>}
+- [Summarize SWAT subbasin for IN-WPaT:]{<https://raw.githubusercontent.com/devalc/Pi-VAT/main/Other_R/summarise_swat_subbasin_results.R>}
 
 
 [Templates for the input data (also used as default data in the tool) are available at:] {<https://github.com/devalc/In-WPaT/tree/main/data>}
