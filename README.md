@@ -23,7 +23,7 @@ We have an approach on WEPPcloud to do this but we working on its seamless integ
 ## How to prepare SWAT outputs for Pi-VAT?
 
 If you want to know how to create files from SWAT outputs that are compatible with this tool
-please click on the link below to navigate to an example R script that you can
+please click on the link below to navigate to well commented example R scripts that can be
 repurpose for synthesizing your runs:
 
 
