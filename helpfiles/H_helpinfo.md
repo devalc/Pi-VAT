@@ -1,0 +1,5 @@
+# Hillslope Analysis
+
+***
+
+This sub-module is focuses on hillslope scale analysis. Let's say you have run multiple watershed and/or scenarios using either the online or offline WEPP. From the 'Watershed Analysis' sub-module you have identified the most sensitive watershed. How do we then target the management/treatment? Let's say you are concerned about erosion and are interested in implementing erosion control measures. This sub-module helps you identify where the sediment is coming from. It helps you answer questions like what percent of the watershed is the sediment loss occurring from? Is it everywhere in the watershed or are there specific hotspots in the landscape? How does it vary under alternative treatment scenarios? What are the trade-offs from targeted implementation of erosion control measures from different scenarios? The zoom threshold allows the user to dynamically filter and display data by percent of watershed area contributing largest magnitude of the selected water quality/quantity metric. This further helps in selecting areas that will have maximum benefit if a certain treatment were to be implemented.
