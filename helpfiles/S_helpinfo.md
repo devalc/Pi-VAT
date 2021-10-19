@@ -1,0 +1,6 @@
+# Spatial Analysis
+
+***
+
+This sub-module interactively visualizes and tabulates hillslopes. For instance it visualizes where the sediment load is coming from and tabulates information on those hillslopes. It lets user relate these values to a user selected baseline scenario. It generates spatial maps with absolute values for both scenarios (baseline and comparison). It also creates a spatial map of the difference (comparison minus baseline) for a user selected metric to inform the user about trade-off's of a particular treatment compared to the baseline scenario. 
+This sub-module also allows the user to dynamically filter the displayed maps and tabulated information based on the slope of the landscape. This is especially useful in the case where the users watershed is in a montane region and the user is limited to a certain landscape steepness range within which they can implement treatments. The zoom threshold option in this sub-module lets the user display the maps and tables by percent of watershed area contributing largest magnitude of selected water quality/quantity metric. 
