@@ -24,7 +24,6 @@ library(shiny,quietly = TRUE)
 library(qs,quietly = TRUE,warn.conflicts = FALSE)
 library(tools,quietly = TRUE)
 library(sf,quietly = TRUE)
-# library(echarts4r, quietly = TRUE)
 library(tidyverse,quietly = TRUE,warn.conflicts = FALSE)
 library(shinythemes,quietly = TRUE)
 library(shinycssloaders,quietly = TRUE)
@@ -37,7 +36,7 @@ library(ggthemes,quietly = TRUE)
 library(DT,quietly = TRUE)
 library(shinyhelper,quietly = TRUE)
 library(shinyalert,quietly = TRUE)
-# library(crosstalk,quietly = TRUE)
+library(htmltools,quietly = TRUE)
 library(sever,quietly = TRUE)
 library(showtext, quietly = TRUE)
 library(ragg, quietly = TRUE)
@@ -97,7 +96,7 @@ ui <- navbarPage(
     # fluid = TRUE,
     collapsible = TRUE,
     id = 'tabs',
-    
+    header = singleton(tags$head(includeHTML('google-analytics.html'))),
     
     
     
@@ -169,11 +168,12 @@ ui <- navbarPage(
                   column(width=3,
                          align = "centre",
                          
-                         thumbnail_label1(
+                         thumbnail_label2(
                                         image = 'background.jpg',
                                         label = 'Watershed Analysis',
                                         content = "Inter-watershed comparison of impacts of management on annual water yield and
-                                      water quality at the watershed outlet"
+                                      water quality at the watershed outlet",
+                                        helpinfo = "W_helpinfo"
                                     ),
                          HTML("<br/>"),
                                     actionBttn("Wbutton", "Navigate to Watershed", icon = icon("line-chart"),style = "pill",
@@ -182,11 +182,12 @@ ui <- navbarPage(
                   column(width=3,
                          align = "centre",
                          
-                         thumbnail_label1(
+                         thumbnail_label2(
                              image = 'hillslope_img.jpg',
                              label = 'Hillslope Analysis',
                              content = "Identifying targeted pollutant hotspots within a watershed and quantifying the impacts of disturbance
-                                      and management on the detachment and delivery of pollutants from these hotspots"
+                                      and management on the detachment and delivery of pollutants from these hotspots",
+                             helpinfo = "H_helpinfo"
                          ),
                          HTML("<br/>"),
                          actionBttn("Hbutton", "Navigate to Hillslope", icon = icon("line-chart"),style = "pill",
@@ -195,11 +196,11 @@ ui <- navbarPage(
                   column(width=3,
                          align = "centre",
                          
-                         thumbnail_label1(
+                         thumbnail_label2(
                              image = 'spatial_imp.PNG',
                              label = 'Spatial Visualization',
-                             content = "Identifying targeted pollutant hotspots within a watershed and quantifying the impacts of disturbance
-                                      and management on the detachment and delivery of pollutants from these hotspots"
+                             content = "Synthesize and visualize hillslope scale output and targeted hotspots across multiple watersheds for multiple treatments",
+                             helpinfo = "S_helpinfo"
                          ),
                          HTML("<br/>"),
                          actionBttn("Sbutton", "Navigate to Spatial-Viz", icon = icon("line-chart"),style = "pill",
@@ -208,10 +209,11 @@ ui <- navbarPage(
                   column(width=3,
                          align = "centre",
                          
-                         thumbnail_label1(
+                         thumbnail_label2(
                              image = 'hru1.jpg',
                              label = 'SWAT-Viz',
-                             content = "Synthesize and visualize subbasin,reach,and HRU scale outputs and targeted HRU scale hotspots across multiple watersheds for multiple treatments."
+                             content = "Synthesize and visualize subbasin,reach,and HRU scale outputs and targeted HRU scale hotspots across multiple watersheds for multiple treatments",
+                             helpinfo = "SWAT_helpinfo"
                          ),
                          HTML("<br/>"),
                          actionBttn("Swatbutton", "Navigate to SWAT-Viz", icon = icon("line-chart"),style = "pill",
@@ -794,7 +796,17 @@ server <- function(input, output, session) {
                 multiple = F,
                 placeholder = "No file selected",
                 accept = ".csv"
-            )
+            )%>%
+                helper(
+                    icon = "question-circle",
+                    colour = "#FF0000",
+                    content = "W_upload",
+                    type = "markdown",
+                    size = "l",
+                    buttonLabel = "Okay",
+                    easyClose = TRUE,
+                    fade = TRUE
+                )
         } else
             if (input$DefOrUserUpload_W == 'Default_Data_Portland' |
                 input$DefOrUserUpload_W == 'Default_Data_Seattle' |
@@ -3419,12 +3431,12 @@ server <- function(input, output, session) {
                             "Select the Subbasin of interest",
                             choices = unique(as.character(SWAT_data()$SUBBASIN)),
                             options = list(`actions-box` = TRUE,
-                                           `header` = "Select Reach",
+                                           `header` = "Select Subbasin",
                                            `windowPadding` = 1,
                                            `width` = " css-width ",
                                            `size` = 6),
                             selected = unique(SWAT_data()$SUBBASIN)[1],
-                            multiple = TRUE
+                            multiple = FALSE
                         )
                     }
         } else
@@ -3442,12 +3454,12 @@ server <- function(input, output, session) {
                                 "Select the Subbasin of interest",
                                 choices = unique(as.character(SWAT_data()$SUBBASIN)),
                                 options = list(`actions-box` = TRUE,
-                                               `header` = "Select Reach",
+                                               `header` = "Select Subbasin",
                                                `windowPadding` = 1,
                                                `width` = " css-width ",
                                                `size` = 6),
                                 selected = unique(SWAT_data()$SUBBASIN)[1],
-                                multiple = TRUE
+                                multiple = FALSE
                             ) 
                         }
             }
@@ -3465,7 +3477,7 @@ server <- function(input, output, session) {
                     "Select the subbasin of interest",
                     choices = unique(as.character(SWAT_data()$SUB)),
                     options = list(`actions-box` = TRUE,
-                                   `header` = "Select Reach",
+                                   `header` = "Select Subbasin",
                                    `windowPadding` = 1,
                                    `width` = " css-width ",
                                    `size` = 6),
@@ -3489,7 +3501,7 @@ server <- function(input, output, session) {
                         "Select the subbasin of interest",
                         choices = unique(as.character(SWAT_data()$SUB)),
                         options = list(`actions-box` = TRUE,
-                                       `header` = "Select Reach",
+                                       `header` = "Select Subbasin",
                                        `windowPadding` = 1,
                                        `width` = " css-width ",
                                        `size` = 6),
@@ -3811,12 +3823,12 @@ server <- function(input, output, session) {
         req(input$SWAT_wshed)
         req(input$SWAT_scen_sub_base)
         req(input$swat_var_sub)
-        # req(input$SWAT_subnum)
+        req(input$SWAT_subnum)
         subdf() %>%
             dplyr::filter(Watershed %in% input$SWAT_wshed &
                               Scenario %in% input$SWAT_scen_sub_base)%>% 
             arrange_at(.vars = input$swat_var_sub, desc) %>% ungroup() %>%
-            dplyr::mutate_if(is.numeric, round, 2) 
+            dplyr::mutate_if(is.numeric, round, 2) %>% dplyr::filter(SUB %in% input$SWAT_subnum)
         })
     
     ### Cool approch to be implemented some other time.
@@ -3824,9 +3836,11 @@ server <- function(input, output, session) {
     #                       input$swat_var_sub - input$swat_var_sub[Scenario == input$SWAT_scen_sub_base]) %>% ungroup()
     
     SWATSub_data_rel<- reactive({
+        req(subdf())
         req(input$SWAT_wshed)
+        req(input$SWAT_subnum)
         subdf() %>%
-            dplyr::filter(Watershed %in% input$SWAT_wshed)%>%
+            dplyr::filter(Watershed %in% input$SWAT_wshed)%>% dplyr::filter(SUB %in% input$SWAT_subnum)%>%
             dplyr::group_by(SUB) %>%
             dplyr::mutate(AbsChange_PRECIPmm = PRECIPmm - PRECIPmm[Scenario == input$SWAT_scen_sub_base],
                           AbsChange_SNOMELTmm = SNOMELTmm - SNOMELTmm[Scenario == input$SWAT_scen_sub_base],
@@ -3857,13 +3871,15 @@ server <- function(input, output, session) {
     })
     
     SWATSub_data_comp <- reactive({
+        
         req(input$SWAT_wshed)
         req(input$SWAT_scen_sub_comp)
         req(SWATSub_data_rel())
         req(input$SWAT_wshed)
+        req(input$SWAT_subnum)
         SWATSub_data_rel() %>%
             dplyr::filter(Watershed %in% input$SWAT_wshed &
-                              Scenario %in% input$SWAT_scen_sub_comp)%>%
+                              Scenario %in% input$SWAT_scen_sub_comp)%>%dplyr::filter(SUB %in% input$SWAT_subnum)%>%
             arrange_at(.vars = input$swat_var_sub, desc) %>% ungroup()%>%
             dplyr::mutate_if(is.numeric, round, 2)
             })
@@ -4283,7 +4299,7 @@ server <- function(input, output, session) {
                             ),
                             stat = "identity",
                             position = "dodge"
-                        ) + guides(fill = FALSE)+
+                        ) + guides(fill = "none")+
                         theme_bw(base_rect_size = 0.1) +
                         theme(
                             axis.text.x = element_text(
@@ -4357,7 +4373,7 @@ server <- function(input, output, session) {
                                 ),
                                 stat = "identity",
                                 position = "dodge"
-                            ) +guides(fill = FALSE)  +
+                            ) +guides(fill = "none")  +
                             theme_bw(base_rect_size = 0.1) +
                             theme(
                                 axis.text.x = element_text(
@@ -4917,7 +4933,7 @@ server <- function(input, output, session) {
                                     y=share,
                                     x=variable)) + 
                         geom_bar(position="dodge", stat="identity")+
-                        guides(fill = FALSE)+
+                        guides(fill = "none")+
                         theme_bw(base_rect_size = 0.1) +
                         theme(
                             axis.text.x = element_text(
@@ -5052,7 +5068,7 @@ server <- function(input, output, session) {
                                         y=share,
                                         x=variable)) + 
                             geom_bar(position="dodge", stat="identity")+
-                            guides(fill = FALSE)+
+                            guides(fill = "none")+
                             theme_bw(base_rect_size = 0.1) +
                             theme(
                                 axis.text.x = element_text(
