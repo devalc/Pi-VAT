@@ -4,12 +4,12 @@
   <img src="https://raw.githubusercontent.com/devalc/In-WPaT/main/www/Pi-VAT_hex.svg" width=50%/>
 </p>
 
-This repository contains a post-processing, interactive visualization, and analysis tool (Pi-VAT). It is an interactive tool for synthesis and decision support using multi-watershed, multi-scenario outputs from complex, geo-spatial water quality models. It is currently programmed to process outptus from two models:
+This repository contains a post-processing, interactive visualization, and analysis tool (Pi-VAT). It is an interactive tool for synthesis and decision support using multi-watershed, multi-scenario outputs from complex, geospatial water quality models. It is currently programmed to process outputs from two models:
 
 - Online interface ([WEPPcloud](<https://wepp.cloud/weppcloud/>)) for the Watershed Erosion Prediction Project (WEPP) 
 - Soil and Water Assessment Tool ([SWAT](<https://swat.tamu.edu/>)). 
 
-Based on the multi-watershed, multi-scenario simulations from these models this tool facilitates interactive identification of sources areas and hotspots of the water quality metric of concern and areas that are suitable for targeted management. For these areas the tool also faciliates comparative analysis by quantifying and visualizing differences between different scenarios. 
+Based on the multi-watershed, multi-scenario simulations from these models this tool facilitates interactive identification of sources areas and hotspots of the water quality metric of concern and areas that are suitable for targeted management. For these areas, the tool also facilitates comparative analysis by quantifying and visualizing differences between different scenarios.  
 
 
 ## Find this application in action here:
@@ -18,12 +18,12 @@ Based on the multi-watershed, multi-scenario simulations from these models this 
 
 ## How to prepare WEPPcloud outputs for Pi-VAT?
 
-We have an approach on WEPPcloud to do this but we working on its seamless integration with Pi-VAT. In the mean time if you would like to create such files and evaluate in Pi-VAT please reach out to us and we can help you create them.
+We have an approach on WEPPcloud to do this but we working on its seamless integration with Pi-VAT. In the meantime, if you would like to create such files and evaluate them in Pi-VAT please reach out to us and we can help you create them.
 
 ## How to prepare SWAT outputs for Pi-VAT?
 
 If you want to know how to create files from SWAT outputs that are compatible with this tool
-please click on the link below to navigate to well commented example R scripts that can be
+please click on the link below to navigate to well-commented example R scripts that can be
 repurpose for synthesizing your runs:
 
 
