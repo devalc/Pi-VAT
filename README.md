@@ -43,5 +43,5 @@ repurpose for synthesizing your runs:
 
 ## How to cite this work:
 
-Deval, C., Brooks, E.S., Dobre, M., Lew, R., Robichaud, P.R., Fowler, A., Boll, J., Easton, Z.M., Collick, A.S., 2022. Pi-VAT: A web-based visualization tool for decision support using spatially complex water quality model outputs. J. Hydrol. 607, 127529.()[https://doi.org/https://doi.org/10.1016/j.jhydrol.2022.127529]
+Deval, C., Brooks, E.S., Dobre, M., Lew, R., Robichaud, P.R., Fowler, A., Boll, J., Easton, Z.M., Collick, A.S., 2022. Pi-VAT: A web-based visualization tool for decision support using spatially complex water quality model outputs. J. Hydrol. 607, 127529. https://doi.org/https://doi.org/10.1016/j.jhydrol.2022.127529
 
