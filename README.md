@@ -40,3 +40,8 @@ repurpose for synthesizing your runs:
 - HRU template file has "__hru__" in the filename
 - Reach template file has "__rch__" in the filename
 - Subbasin template file has "__sub__" in the filename
+
+## How to cite this work:
+
+Deval, C., Brooks, E.S., Dobre, M., Lew, R., Robichaud, P.R., Fowler, A., Boll, J., Easton, Z.M., Collick, A.S., 2022. Pi-VAT: A web-based visualization tool for decision support using spatially complex water quality model outputs. J. Hydrol. 607, 127529.()[https://doi.org/https://doi.org/10.1016/j.jhydrol.2022.127529]
+
